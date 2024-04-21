@@ -13,6 +13,7 @@ export const initGame = () => {
     parent: 'game',
     width: window.innerWidth,
     height: window.innerHeight,
+    backgroundColor: '#eeeeee',
     scale: {
       mode: Phaser.Scale.RESIZE,
       parent: 'game',
