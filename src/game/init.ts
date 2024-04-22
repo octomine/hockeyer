@@ -1,5 +1,5 @@
 import 'phaser'
-import { MainScene } from './scenes'
+import { MainScene } from '@game/scenes'
 
 declare global {
   interface Window {
