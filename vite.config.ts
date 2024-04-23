@@ -11,10 +11,16 @@ export default defineConfig({
   root: '.',
   base: '/hockeyer/',
   resolve: {
-    alias: {
-      '@app': path.resolve(__dirname, './src'),
-      '@game': path.resolve(__dirname, './src/game'),
-    }
+    alias: [
+      {
+        find: '@app',
+        replacement: path.resolve(__dirname, './src')
+      },
+      {
+        find: '@game',
+        replacement: path.resolve(__dirname, './src/game'),
+      }
+    ]
   },
   build: {
     outDir: 'build'
