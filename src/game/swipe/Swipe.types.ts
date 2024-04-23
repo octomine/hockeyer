@@ -8,5 +8,5 @@ export enum Directions {
 
 export interface ISwipeConfig {
   onMove?: (direction: Directions, distance: number, time: number) => void
-  onUp?: (direction: Directions) => void
+  onUp?: () => void
 }

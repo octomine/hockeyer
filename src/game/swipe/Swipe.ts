@@ -56,7 +56,7 @@ class Swipe {
   private upHandler() {
     this.scene.input.removeListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
     if (this.config?.onUp) {
-      this.config.onUp(this.direction)
+      this.config.onUp()
     }
   }
 }
