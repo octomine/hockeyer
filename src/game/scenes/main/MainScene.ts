@@ -16,26 +16,29 @@ class MainScene extends Phaser.Scene {
   create() {
     const { x } = getCenter(this.scale)
     this.gObj = this.physics.add.image(x, 50, 'char')
-    this.gObj.setDrag(30)
+
+    const body = this.gObj.body as Phaser.Physics.Arcade.Body
+    body?.setDrag(30)
 
     this.swipe = new Swipe(this, {
       onMove: (direction: Directions, distance: number, time: number) => {
         switch (direction) {
           case Directions.Down:
-            this.gObj.setAccelerationY(1000 * distance / time)
+            body.setAccelerationY(1000 * distance / time)
             break
           case Directions.Left:
           case Directions.Right:
-            this.gObj.setVelocityX(100 * (Directions.Down - direction))
+            body.setVelocityX(50 * (Directions.Down - direction))
             break
           default:
         }
       },
       onUp: (direction: Directions) => {
         console.log(direction);
-        this.gObj.setAccelerationY(0)
+        body.setAccelerationY(0)
       }
     })
+    console.log(this.swipe);
   }
 }
 
