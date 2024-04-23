@@ -3,7 +3,7 @@ import { Directions, Swipe, getCenter } from "@game/index"
 const DRAG = 30
 
 class MainScene extends Phaser.Scene {
-  private gObj!: Phaser.GameObjects.GameObject
+  private gObj!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 
   private swipe!: Swipe
 
@@ -18,34 +18,38 @@ class MainScene extends Phaser.Scene {
   create() {
     const { x } = getCenter(this.scale)
     this.gObj = this.physics.add.image(x, 50, 'char')
-
-    const body = this.gObj.body as Phaser.Physics.Arcade.Body
-    body.setDrag(DRAG)
+    this.gObj.setDrag(DRAG)
 
     this.swipe = new Swipe(this, {
       onMove: (direction: Directions, distance: number, time: number) => {
         switch (direction) {
           case Directions.Down:
-            body.setAccelerationY(1000 * distance / time)
+            this.gObj.setAccelerationY(1000 * distance / time)
             break
           case Directions.Left:
           case Directions.Right:
-            body.setVelocityX(50 * (Directions.Down - direction))
+            this.gObj.setVelocityX(50 * (Directions.Down - direction))
             break
           case Directions.Up:
-            if(body.velocity.length()>0) {
-              body.setDrag(time);
+            if (this.gObj.body.velocity.length() > 0) {
+              this.gObj.setDrag(time);
             }
             break
           default:
         }
       },
       onUp: () => {
-        body.setAccelerationY(0)
-        body.setDrag(DRAG)
+        this.gObj.setAccelerationY(0)
+        this.gObj.setDrag(DRAG)
       }
     })
     console.log(this.swipe);
+  }
+
+  update() {
+    if (this.gObj.y > this.scale.height) {
+      this.gObj.setPosition(this.gObj.x, 50)
+    }
   }
 }
 
