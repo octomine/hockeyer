@@ -22,16 +22,19 @@ class MainScene extends Phaser.Scene {
 
     this.swipe = new Swipe(this, {
       onMove: (direction: Directions, distance: number, time: number) => {
+        const velocity = this.gObj.body.velocity.length()
         switch (direction) {
           case Directions.Down:
             this.gObj.setAccelerationY(1000 * distance / time)
             break
           case Directions.Left:
           case Directions.Right:
-            this.gObj.setVelocityX(50 * (Directions.Down - direction))
+            if (velocity > 0) {
+              this.gObj.setVelocityX(50 * (Directions.Down - direction))
+            }
             break
           case Directions.Up:
-            if (this.gObj.body.velocity.length() > 0) {
+            if (velocity > 0) {
               this.gObj.setDrag(time);
             }
             break
