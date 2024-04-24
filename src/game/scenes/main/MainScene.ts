@@ -1,6 +1,4 @@
-import { Directions, Player, Swipe } from "@game/index"
-
-const DRAG = 30
+import { Player, Swipe } from "@game/index"
 
 class MainScene extends Phaser.Scene {
   private player!: Player
@@ -20,30 +18,8 @@ class MainScene extends Phaser.Scene {
 
     this.swipe = new Swipe(this)
     this.swipe.addListeners({
-      onMove: (direction: Directions, distance: number, time: number) => {
-        const velocity = this.player.body?.velocity.length() || 0
-        switch (direction) {
-          case Directions.Down:
-            this.player.setAccelerationY(1000 * distance / time)
-            break
-          case Directions.Left:
-          case Directions.Right:
-            if (velocity > 0) {
-              this.player.setVelocityX(50 * (Directions.Down - direction))
-            }
-            break
-          case Directions.Up:
-            if (velocity > 0) {
-              this.player.setDrag(time);
-            }
-            break
-          default:
-        }
-      },
-      onUp: () => {
-        this.player.setAccelerationY(0)
-        this.player.setDrag(DRAG)
-      }
+      onMove: this.player.modifyMotion.bind(this.player),
+      onUp: this.player.resetMotion.bind(this.player)
     })
   }
 
