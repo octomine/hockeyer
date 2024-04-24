@@ -2,6 +2,8 @@ import { Directions, getCenter } from "@app/game";
 import { Entity } from "../entity";
 
 const DRAG = 30
+const COEFF_ACCELERATION = 1000
+const COEFF_VELOCITY = 50
 
 class Player extends Entity {
   constructor(scene: Phaser.Scene) {
@@ -16,12 +18,12 @@ class Player extends Entity {
     const velocity = this.body?.velocity.length() || 0
     switch (direction) {
       case Directions.Down:
-        this.setAccelerationY(1000 * distance / time)
+        this.setAccelerationY(COEFF_ACCELERATION * distance / time)
         break
       case Directions.Left:
       case Directions.Right:
         if (velocity > 0) {
-          this.setVelocityX(50 * (Directions.Down - direction))
+          this.setVelocityX(COEFF_VELOCITY * (Directions.Down - direction))
         }
         break
       case Directions.Up:
