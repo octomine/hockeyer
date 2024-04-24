@@ -18,7 +18,8 @@ class MainScene extends Phaser.Scene {
   create() {
     this.player = new Player(this)
 
-    this.swipe = new Swipe(this, {
+    this.swipe = new Swipe(this)
+    this.swipe.addListeners({
       onMove: (direction: Directions, distance: number, time: number) => {
         const velocity = this.player.body?.velocity.length() || 0
         switch (direction) {
@@ -44,7 +45,6 @@ class MainScene extends Phaser.Scene {
         this.player.setDrag(DRAG)
       }
     })
-    console.log(this.swipe);
   }
 
   update() {

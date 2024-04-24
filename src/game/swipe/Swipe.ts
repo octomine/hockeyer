@@ -1,16 +1,19 @@
-import { Directions, ISwipeConfig } from "./Swipe.types"
+import { Directions, ISwipeListeners } from "./Swipe.types"
 
 class Swipe {
   private scene: Phaser.Scene
-  private config: ISwipeConfig
+  private listeners!: ISwipeListeners
   private downPoint = new Phaser.Math.Vector2()
   private downTime = 0
   private direction = Directions.None
 
-  constructor(scene: Phaser.Scene, config = {}) {
+  constructor(scene: Phaser.Scene) {
     this.scene = scene
-    this.config = config
     this.setupEvents()
+  }
+
+  addListeners(listeners:ISwipeListeners) {
+    this.listeners = listeners
   }
 
   private setupEvents() {
@@ -48,15 +51,15 @@ class Swipe {
       }
     }
     const time = new Date().getTime() - this.downTime
-    if (this.config?.onMove) {
-      this.config.onMove(this.direction, distance, time)
+    if (this.listeners?.onMove) {
+      this.listeners.onMove(this.direction, distance, time)
     }
   }
 
   private upHandler() {
     this.scene.input.removeListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
-    if (this.config?.onUp) {
-      this.config.onUp()
+    if (this.listeners?.onUp) {
+      this.listeners.onUp()
     }
   }
 }
