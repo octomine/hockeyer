@@ -6,7 +6,7 @@ export enum Directions {
   Left,
 }
 
-export interface ISwipeConfig {
+export interface ISwipeListeners {
   onMove?: (direction: Directions, distance: number, time: number) => void
   onUp?: () => void
 }
