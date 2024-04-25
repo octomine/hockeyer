@@ -32,6 +32,7 @@ class Swipe {
   }
 
   private moveHandler(pointer: Phaser.Input.Pointer) {
+    console.log(pointer.velocity.y);
     const movePrams = this.getMoveParams(this.downPoint, pointer.position, this.downTime)
     if (this.listeners?.onMove) {
       this.listeners.onMove(movePrams)
@@ -51,7 +52,7 @@ class Swipe {
     if (distance === 0) {
       direction = Directions.None
     } else {
-      const rad = Phaser.Math.Angle.BetweenPoints(startPoint, endPoint)
+      const rad = Phaser.Math.Angle.BetweenPoints(endPoint, startPoint)
       const deg = Phaser.Math.RadToDeg(rad)
       const abs = Math.abs(deg)
       if (abs < 45) {
