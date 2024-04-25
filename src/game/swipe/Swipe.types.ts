@@ -6,7 +6,13 @@ export enum Directions {
   Left,
 }
 
-export interface ISwipeListeners {
-  onMove?: (direction: Directions, distance: number, time: number) => void
+export type TMoveParams = {
+  direction: Directions
+  distance: number
+  time: number
+}
+
+export type TSwipeListeners = {
+  onMove?: (movePrams: TMoveParams) => void
   onUp?: () => void
 }
