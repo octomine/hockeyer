@@ -6,9 +6,6 @@ class Swipe {
   private listeners!: TSwipeListeners
   private downPoint = new Phaser.Math.Vector2()
   private downTime = 0
-  private direction = Directions.None
-
-  private _isMoving = false
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene
@@ -17,12 +14,6 @@ class Swipe {
 
   addListeners(listeners: TSwipeListeners) {
     this.listeners = listeners
-  }
-
-  checkPointer() {
-    if (this.direction === Directions.Down && this.scene.input.mousePointer.distance < 1) {
-      this.upHandler()
-    }
   }
 
   private setupEvents() {
@@ -36,7 +27,6 @@ class Swipe {
   }
 
   private downHandler(pointer: Phaser.Input.Pointer) {
-    this._isMoving = true
     this.downPoint = pointer.position.clone()
     this.downTime = new Date().getTime()
     this.scene.input.addListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
@@ -50,7 +40,6 @@ class Swipe {
   }
 
   private upHandler() {
-    this._isMoving = false
     this.scene.input.removeListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
     if (this.listeners?.onUp) {
       this.listeners.onUp()
@@ -58,29 +47,26 @@ class Swipe {
   }
 
   private getMoveParams(startPoint: Phaser.Math.Vector2, endPoint: Phaser.Math.Vector2, startTime: number): TMoveParams {
+    let direction = Directions.None
     const distance = startPoint.distance(endPoint)
     if (distance === 0) {
-      this.direction = Directions.None
+      direction = Directions.None
     } else {
       const rad = Phaser.Math.Angle.BetweenPoints(endPoint, startPoint)
       const deg = Phaser.Math.RadToDeg(rad)
       const abs = Math.abs(deg)
       if (abs < 45) {
-        this.direction = Directions.Left
+        direction = Directions.Left
       } else if (abs > 135) {
-        this.direction = Directions.Right
+        direction = Directions.Right
       } else if (deg > 0) {
-        this.direction = Directions.Up
+        direction = Directions.Up
       } else {
-        this.direction = Directions.Down
+        direction = Directions.Down
       }
     }
     const time = new Date().getTime() - startTime
-    return { direction: this.direction, distance, time }
-  }
-
-  get isMoving(): boolean {
-    return this._isMoving
+    return { direction, distance, time }
   }
 }
 
