@@ -27,6 +27,10 @@ class MainScene extends Phaser.Scene {
     if (this.player.y > this.scale.height) {
       this.player.setPosition(this.player.x, 50)
     }
+
+    if (this.swipe.isMoving) {
+      this.swipe.checkPointer()
+    }
   }
 }
 
