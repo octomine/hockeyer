@@ -1,4 +1,4 @@
-import { Directions, getCenter } from "@app/game";
+import { Directions, TMoveParams, getCenter } from "@app/game";
 import { Entity } from "../entity";
 
 const DRAG = 30
@@ -14,7 +14,7 @@ class Player extends Entity {
     this.resetMotion()
   }
 
-  modifyMotion(direction: Directions, distance: number, time: number) {
+  modifyMotion({ direction, distance, time }: TMoveParams) {
     const velocity = this.body?.velocity.length() || 0
     switch (direction) {
       case Directions.Down:

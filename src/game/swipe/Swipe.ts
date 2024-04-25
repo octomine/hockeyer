@@ -1,18 +1,17 @@
-import { Directions, ISwipeListeners } from "./Swipe.types"
+import { Directions, TMoveParams, TSwipeListeners } from "./Swipe.types"
 
 class Swipe {
   private scene: Phaser.Scene
-  private listeners!: ISwipeListeners
+  private listeners!: TSwipeListeners
   private downPoint = new Phaser.Math.Vector2()
   private downTime = 0
-  private direction = Directions.None
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene
     this.setupEvents()
   }
 
-  addListeners(listeners:ISwipeListeners) {
+  addListeners(listeners: TSwipeListeners) {
     this.listeners = listeners
   }
 
@@ -33,26 +32,9 @@ class Swipe {
   }
 
   private moveHandler(pointer: Phaser.Input.Pointer) {
-    const distance = this.downPoint.distance(pointer.position)
-    if (distance === 0) {
-      this.direction = Directions.None
-    } else {
-      const rad = Phaser.Math.Angle.BetweenPoints(pointer.position, this.downPoint)
-      const deg = Phaser.Math.RadToDeg(rad)
-      const abs = Math.abs(deg)
-      if (abs < 45) {
-        this.direction = Directions.Left
-      } else if (abs > 135) {
-        this.direction = Directions.Right
-      } else if (deg > 0) {
-        this.direction = Directions.Up
-      } else {
-        this.direction = Directions.Down
-      }
-    }
-    const time = new Date().getTime() - this.downTime
+    const movePrams = this.getMoveParams(this.downPoint, pointer.position, this.downTime)
     if (this.listeners?.onMove) {
-      this.listeners.onMove(this.direction, distance, time)
+      this.listeners.onMove(movePrams)
     }
   }
 
@@ -61,6 +43,29 @@ class Swipe {
     if (this.listeners?.onUp) {
       this.listeners.onUp()
     }
+  }
+
+  private getMoveParams(startPoint: Phaser.Math.Vector2, endPoint: Phaser.Math.Vector2, startTime: number): TMoveParams {
+    let direction = Directions.None
+    const distance = startPoint.distance(endPoint)
+    if (distance === 0) {
+      direction = Directions.None
+    } else {
+      const rad = Phaser.Math.Angle.BetweenPoints(startPoint, endPoint)
+      const deg = Phaser.Math.RadToDeg(rad)
+      const abs = Math.abs(deg)
+      if (abs < 45) {
+        direction = Directions.Left
+      } else if (abs > 135) {
+        direction = Directions.Right
+      } else if (deg > 0) {
+        direction = Directions.Up
+      } else {
+        direction = Directions.Down
+      }
+    }
+    const time = new Date().getTime() - startTime
+    return { direction, distance, time }
   }
 }
 
