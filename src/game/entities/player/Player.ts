@@ -3,7 +3,7 @@ import { Entity } from "../entity";
 
 const DRAG = 30
 const COEFF_ACCELERATION = 50
-const COEFF_VELOCITY = 50
+const COEFF_VELOCITY = .05
 
 class Player extends Entity {
   constructor(scene: Phaser.Scene) {
@@ -11,6 +11,7 @@ class Player extends Entity {
 
     super(scene, x, 50, 'char')
 
+    this.setCollideWorldBounds(true)
     this.setDrag(DRAG)
   }
 
@@ -20,7 +21,10 @@ class Player extends Entity {
       case Directions.Left:
       case Directions.Right:
         if (velocity > 0) {
-          this.setVelocityX(COEFF_VELOCITY * (Directions.Down - direction))
+          const v = this.body?.velocity
+          const d = direction - Directions.Down
+          v?.rotate(COEFF_VELOCITY * d)
+          this.setVelocity(v?.x || 0, v?.y)
         }
         break
       case Directions.Up:

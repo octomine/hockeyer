@@ -24,7 +24,7 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.player.y > this.scale.height) {
+    if (this.player.y > this.scale.height - 1.5 * this.player.height) {
       this.player.setPosition(this.player.x, 50)
     }
   }
