@@ -19,7 +19,7 @@ class MainScene extends Phaser.Scene {
     this.swipe = new Swipe(this)
     this.swipe.addListeners({
       onMove: this.player.modifyMotion.bind(this.player),
-      onUp: this.player.resetMotion.bind(this.player)
+      onUp: this.player.checkAcceleration.bind(this.player)
     })
   }
 

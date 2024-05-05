@@ -39,10 +39,11 @@ class Swipe {
     }
   }
 
-  private upHandler() {
+  private upHandler(pointer: Phaser.Input.Pointer) {
     this.scene.input.removeListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
+    const movePrams = this.getMoveParams(this.downPoint, pointer.position, this.downTime)
     if (this.listeners?.onUp) {
-      this.listeners.onUp()
+      this.listeners.onUp(movePrams)
     }
   }
 
