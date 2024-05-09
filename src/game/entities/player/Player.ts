@@ -2,7 +2,7 @@ import { Directions, TMoveParams, getCenter } from "@app/game";
 import { Entity } from "../entity";
 
 const DRAG = 30
-const COEFF_ACCELERATION = 50
+const COEFF_ACCELERATION = 100
 const COEFF_VELOCITY = .05
 
 class Player extends Entity {
