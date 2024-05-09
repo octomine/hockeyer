@@ -11,7 +11,8 @@ class Player extends Entity {
 
     super(scene, x, 50, 'char')
 
-    this.setCollideWorldBounds(true, 1, 1)
+    this.setCollideWorldBounds(true, .5, .5)
+    this.setBounce(.5)
     this.setDrag(DRAG)
   }
 
