@@ -14,5 +14,5 @@ export type TMoveParams = {
 
 export type TSwipeListeners = {
   onMove?: (movePrams: TMoveParams) => void
-  onUp?: () => void
+  onUp?: (movePrams: TMoveParams) => void
 }

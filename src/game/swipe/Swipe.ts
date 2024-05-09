@@ -2,6 +2,7 @@ import { Directions, TMoveParams, TSwipeListeners } from "./Swipe.types"
 
 class Swipe {
   private scene: Phaser.Scene
+
   private listeners!: TSwipeListeners
   private downPoint = new Phaser.Math.Vector2()
   private downTime = 0
@@ -38,10 +39,11 @@ class Swipe {
     }
   }
 
-  private upHandler() {
+  private upHandler(pointer: Phaser.Input.Pointer) {
     this.scene.input.removeListener(Phaser.Input.Events.POINTER_MOVE, this.moveHandler, this)
+    const movePrams = this.getMoveParams(this.downPoint, pointer.position, this.downTime)
     if (this.listeners?.onUp) {
-      this.listeners.onUp()
+      this.listeners.onUp(movePrams)
     }
   }
 
@@ -51,7 +53,7 @@ class Swipe {
     if (distance === 0) {
       direction = Directions.None
     } else {
-      const rad = Phaser.Math.Angle.BetweenPoints(startPoint, endPoint)
+      const rad = Phaser.Math.Angle.BetweenPoints(endPoint, startPoint)
       const deg = Phaser.Math.RadToDeg(rad)
       const abs = Math.abs(deg)
       if (abs < 45) {

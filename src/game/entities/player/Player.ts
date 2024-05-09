@@ -2,8 +2,8 @@ import { Directions, TMoveParams, getCenter } from "@app/game";
 import { Entity } from "../entity";
 
 const DRAG = 30
-const COEFF_ACCELERATION = 1000
-const COEFF_VELOCITY = 50
+const COEFF_ACCELERATION = 100
+const COEFF_VELOCITY = .05
 
 class Player extends Entity {
   constructor(scene: Phaser.Scene) {
@@ -11,19 +11,21 @@ class Player extends Entity {
 
     super(scene, x, 50, 'char')
 
-    this.resetMotion()
+    this.setCollideWorldBounds(true, .5, .5)
+    this.setBounce(.5)
+    this.setDrag(DRAG)
   }
 
-  modifyMotion({ direction, distance, time }: TMoveParams) {
+  modifyMotion({ direction, time }: TMoveParams) {
     const velocity = this.body?.velocity.length() || 0
     switch (direction) {
-      case Directions.Down:
-        this.setAccelerationY(COEFF_ACCELERATION * distance / time)
-        break
       case Directions.Left:
       case Directions.Right:
         if (velocity > 0) {
-          this.setVelocityX(COEFF_VELOCITY * (Directions.Down - direction))
+          const v = this.body?.velocity
+          const d = direction - Directions.Down
+          v?.rotate(COEFF_VELOCITY * d)
+          this.setVelocity(v?.x || 0, v?.y)
         }
         break
       case Directions.Up:
@@ -35,8 +37,12 @@ class Player extends Entity {
     }
   }
 
-  resetMotion() {
-    this.setAccelerationY(0)
+  checkAcceleration({ direction, distance, time }: TMoveParams) {
+    if (direction === Directions.Down) {
+      const cv = this.body?.velocity.y || 0
+      const dv = COEFF_ACCELERATION * distance / time
+      this.setVelocityY(cv + dv)
+    }
     this.setDrag(DRAG)
   }
 }
