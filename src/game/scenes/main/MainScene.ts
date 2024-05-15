@@ -21,6 +21,8 @@ class MainScene extends Phaser.Scene {
     this.barGrp = this.physics.add.group()
     this.physics.add.collider(this.player, this.barGrp)
 
+    this.cameras.main.startFollow(this.player)
+
     this.swipe = new Swipe(this)
     this.swipe.addListeners({
       onMove: this.player.modifyMotion.bind(this.player),
@@ -31,7 +33,8 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.player.y > this.scale.height - 1.5 * this.player.height) {
+    const { y } = this.player
+    if (y > this.scale.height - 1.5 * this.player.height) {
       this.player.setPosition(this.player.x, 50)
       this.updateBars()
     }
@@ -40,7 +43,7 @@ class MainScene extends Phaser.Scene {
   updateBars() {
     this.barGrp.clear(true, true)
     const { width, height } = this.scale;
-    for (let i = 0; i < 5; i ++) {
+    for (let i = 0; i < 5; i++) {
       const x = Phaser.Math.Between(0, width)
       const y = Phaser.Math.Between(0, height)
       const bar = this.physics.add.existing(new Barrier(this, x, y))
