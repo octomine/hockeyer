@@ -12,7 +12,7 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('ice', 'assets/ice.jpg')
+    this.load.image('ice', 'assets/ice.png')
     this.load.image('char', 'assets/char.png')
     this.load.image('bar', 'assets/barrier.png')
   }
@@ -33,7 +33,7 @@ class MainScene extends Phaser.Scene {
     this.barGrp = this.physics.add.group()
     this.physics.add.collider(this.player, this.barGrp)
 
-    this.cameras.main.startFollow(this.player, true)
+    this.cameras.main.startFollow(this.player, true, .05, .05)
 
     this.swipe = new Swipe(this)
     this.swipe.addListeners({
