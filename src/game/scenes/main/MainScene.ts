@@ -12,16 +12,28 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image('ice', 'assets/ice.jpg')
     this.load.image('char', 'assets/char.png')
     this.load.image('bar', 'assets/barrier.png')
   }
 
   create() {
+    const { width, height } = this.add.image(0, 0, 'ice').setOrigin(0)
+    const textureCopies = 5
+    const h = height * textureCopies
+    for (let i = 0; i < textureCopies; i++) {
+      this.add.image(0, i * height, 'ice').setOrigin(0)
+    }
+
+    this.cameras.main.setBounds(0, 0, width, h)
+    this.physics.world.setBounds(0, 0, width, h)
+
     this.player = new Player(this)
+    this.player.setPosition(width / 2, 50)
     this.barGrp = this.physics.add.group()
     this.physics.add.collider(this.player, this.barGrp)
 
-    this.cameras.main.startFollow(this.player)
+    this.cameras.main.startFollow(this.player, true)
 
     this.swipe = new Swipe(this)
     this.swipe.addListeners({
@@ -33,11 +45,11 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    const { y } = this.player
-    if (y > this.scale.height - 1.5 * this.player.height) {
-      this.player.setPosition(this.player.x, 50)
-      this.updateBars()
-    }
+    // const { y } = this.player
+    // if (y > this.scale.height - 1.5 * this.player.height) {
+    //   this.player.setPosition(this.player.x, 50)
+    //   this.updateBars()
+    // }
   }
 
   updateBars() {

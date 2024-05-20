@@ -1,4 +1,4 @@
-import { Directions, TMoveParams, getCenter } from "@app/game";
+import { Directions, TMoveParams } from "@app/game";
 import { Entity } from "../entity";
 
 const DRAG = 30
@@ -7,9 +7,7 @@ const COEFF_VELOCITY = .05
 
 class Player extends Entity {
   constructor(scene: Phaser.Scene) {
-    const { x } = getCenter(scene.scale)
-
-    super(scene, x, 50, 'char')
+    super(scene, 0, 50, 'char')
 
     this.setCollideWorldBounds(true, .5, .5)
     this.setBounce(.5)
