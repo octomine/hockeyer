@@ -1,6 +1,11 @@
 import Barrier from "@app/game/entities/barrier/Barrier"
 import { Player, Swipe } from "@game/index"
 
+const WORLD_PADDINGS = 50
+const OFFSET_COEFF = .75
+const PADDING_V = 30
+const PADDING_H = 50
+
 class MainScene extends Phaser.Scene {
   private player!: Player
   private barGrp!: Phaser.Physics.Arcade.Group
@@ -25,7 +30,7 @@ class MainScene extends Phaser.Scene {
       this.add.image(0, i * height, 'ice').setOrigin(0)
     }
 
-    this.cameras.main.setBounds(0, 0, width, h)
+    this.cameras.main.setBounds(-WORLD_PADDINGS, -WORLD_PADDINGS, width + 2 * WORLD_PADDINGS, h + 2 * WORLD_PADDINGS)
     this.physics.world.setBounds(0, 0, width, h)
 
     this.player = new Player(this)
@@ -45,11 +50,12 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    // const { y } = this.player
-    // if (y > this.scale.height - 1.5 * this.player.height) {
-    //   this.player.setPosition(this.player.x, 50)
-    //   this.updateBars()
-    // }
+    if (this.player.body) {
+      const { x, y } = this.player.body.velocity
+      const xOffset = Math.min(OFFSET_COEFF * x, (this.scale.height / 2) - PADDING_V)
+      const yOffset = Math.min(OFFSET_COEFF * y, (this.scale.height / 2) - PADDING_H)
+      this.cameras.main.setFollowOffset(-xOffset, -yOffset)
+    }
   }
 
   updateBars() {

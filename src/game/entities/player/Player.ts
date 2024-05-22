@@ -3,11 +3,13 @@ import { Entity } from "../entity";
 
 const DRAG = 30
 const COEFF_ACCELERATION = 100
-const COEFF_VELOCITY = .05
+const COEFF_VELOCITY = .057
 
 class Player extends Entity {
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 50, 'char')
+
+    this.setOrigin(.5)
 
     this.setCollideWorldBounds(true, .5, .5)
     this.setBounce(.5)
