@@ -7,6 +7,9 @@ class Swipe {
   private downPoint = new Phaser.Math.Vector2()
   private downTime = 0
 
+  private lastPoint!: Phaser.Math.Vector2
+  private lastDirection = Directions.None
+
   constructor(scene: Phaser.Scene) {
     this.scene = scene
     this.setupEvents()
@@ -33,6 +36,15 @@ class Swipe {
   }
 
   private moveHandler(pointer: Phaser.Input.Pointer) {
+    if (this.lastPoint) {
+      const { direction } = this.getMoveParams(this.lastPoint, pointer.position, 0)
+      if (this.lastDirection !== direction && this.lastDirection !== Directions.None) {
+        this.upHandler(pointer)
+        this.downHandler(pointer)
+      }
+      this.lastDirection = direction
+    }
+    this.lastPoint = pointer.position.clone()
     const movePrams = this.getMoveParams(this.downPoint, pointer.position, this.downTime)
     if (this.listeners?.onMove) {
       this.listeners.onMove(movePrams)
