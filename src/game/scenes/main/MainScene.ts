@@ -1,3 +1,4 @@
+import { createLevel } from "@app/game/level/create"
 import { Player, Swipe, Bonus } from "@game/index"
 
 const WORLD_PADDINGS = 50
@@ -25,17 +26,7 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    const { width, height } = this.add.image(0, 0, 'ice').setOrigin(0)
-    const textureCopies = 5
-    const h = height * textureCopies
-    for (let i = 0; i < textureCopies; i++) {
-      this.add.image(0, i * height, 'ice').setOrigin(0)
-    }
-
-    this.physics.world.setBounds(0, 0, width, h)
-
     this.player = new Player(this)
-    this.player.setPosition(width / 2, 50)
 
     this.barGrp = this.physics.add.group()
     this.physics.add.collider(this.player, this.barGrp)
@@ -47,7 +38,9 @@ class MainScene extends Phaser.Scene {
       bonus.collect()
     })
 
-    this.cameras.main.setBounds(-WORLD_PADDINGS, -WORLD_PADDINGS, width + 2 * WORLD_PADDINGS, h + 2 * WORLD_PADDINGS)
+    const { width, height } = createLevel(this, this.player, this.barGrp, this.bonusGrp)
+
+    this.cameras.main.setBounds(-WORLD_PADDINGS, -WORLD_PADDINGS, width + 2 * WORLD_PADDINGS, height + 2 * WORLD_PADDINGS)
     this.cameras.main.startFollow(this.player, true, .05, .05)
 
     this.swipe = new Swipe(this)
@@ -55,8 +48,6 @@ class MainScene extends Phaser.Scene {
       onMove: this.player.modifyMotion.bind(this.player),
       onUp: this.player.checkAcceleration.bind(this.player)
     })
-
-    this.addBonus(width)
   }
 
   update() {
@@ -65,17 +56,6 @@ class MainScene extends Phaser.Scene {
       const xOffset = Math.min(OFFSET_COEFF * x, (this.scale.height / 2) - PADDING_V)
       const yOffset = Math.min(OFFSET_COEFF * y, (this.scale.height / 2) - PADDING_H)
       this.cameras.main.setFollowOffset(-xOffset, -yOffset)
-    }
-  }
-
-  // ---
-  addBonus(w: number) {
-    const x = w / 2
-    const y = 200
-    const step = 50
-    for (let i = 0; i < 5; i++) {
-      const bonus = new Bonus(this, x, y + i * step)
-      this.bonusGrp.add(bonus)
     }
   }
 }
