@@ -1,4 +1,4 @@
-import { Player, Barrier, Swipe, Bonus } from "@game/index"
+import { Player, Swipe, Bonus } from "@game/index"
 
 const WORLD_PADDINGS = 50
 const OFFSET_COEFF = .75
@@ -41,11 +41,10 @@ class MainScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.barGrp)
 
     this.bonusGrp = this.physics.add.group()
-    this.physics.add.overlap(this.player, this.bonusGrp, (player, bonus) => {
-      console.log(player);
-      const cBonus = bonus as Bonus
-      this.bonusGrp.remove(cBonus)
-      cBonus.collect()
+    this.physics.add.overlap(this.player, this.bonusGrp, (_, obj) => {
+      const bonus = obj as Bonus
+      this.bonusGrp.remove(bonus)
+      bonus.collect()
     })
 
     this.cameras.main.setBounds(-WORLD_PADDINGS, -WORLD_PADDINGS, width + 2 * WORLD_PADDINGS, h + 2 * WORLD_PADDINGS)
@@ -57,7 +56,6 @@ class MainScene extends Phaser.Scene {
       onUp: this.player.checkAcceleration.bind(this.player)
     })
 
-    // this.updateBars()
     this.addBonus(width)
   }
 
@@ -71,17 +69,6 @@ class MainScene extends Phaser.Scene {
   }
 
   // ---
-  updateBars() {
-    this.barGrp.clear(true, true)
-    const { width, height } = this.scale;
-    for (let i = 0; i < 5; i++) {
-      const x = Phaser.Math.Between(0, width)
-      const y = Phaser.Math.Between(0, height)
-      const bar = this.physics.add.existing(new Barrier(this, x, y))
-      this.barGrp.add(bar)
-    }
-  }
-
   addBonus(w: number) {
     const x = w / 2
     const y = 200
