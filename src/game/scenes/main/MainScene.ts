@@ -1,4 +1,4 @@
-import { createLevel } from "@app/game/level/create"
+import Level from "@app/game/level/Level"
 import { Player, Swipe, Bonus } from "@game/index"
 
 const WORLD_PADDINGS = 50
@@ -9,7 +9,7 @@ const PADDING_H = 50
 class MainScene extends Phaser.Scene {
   private player!: Player
 
-  private barGrp!: Phaser.Physics.Arcade.Group
+  private barrsGrp!: Phaser.Physics.Arcade.Group
   private bonusGrp!: Phaser.Physics.Arcade.Group
 
   private swipe!: Swipe
@@ -26,19 +26,20 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.player = new Player(this)
-
-    this.barGrp = this.physics.add.group()
-    this.physics.add.collider(this.player, this.barGrp)
-
+    this.barrsGrp = this.physics.add.group()
     this.bonusGrp = this.physics.add.group()
+
+
+    Level.init(this, this.bonusGrp, this.barrsGrp)
+    const { width, height } = Level.create()
+
+    this.player = new Player(this, width / 2)
+    this.physics.add.collider(this.player, this.barrsGrp)
     this.physics.add.overlap(this.player, this.bonusGrp, (_, obj) => {
       const bonus = obj as Bonus
       this.bonusGrp.remove(bonus)
       bonus.collect()
     })
-
-    const { width, height } = createLevel(this, this.player, this.barGrp, this.bonusGrp)
 
     this.cameras.main.setBounds(-WORLD_PADDINGS, -WORLD_PADDINGS, width + 2 * WORLD_PADDINGS, height + 2 * WORLD_PADDINGS)
     this.cameras.main.startFollow(this.player, true, .05, .05)
