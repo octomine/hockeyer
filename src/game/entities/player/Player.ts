@@ -22,10 +22,8 @@ class Player extends Entity {
       case Directions.Left:
       case Directions.Right:
         if (velocity > 0) {
-          const v = this.body?.velocity
           const d = direction - Directions.Down
-          v?.rotate(COEFF_VELOCITY * d)
-          this.setVelocity(v?.x || 0, v?.y)
+          this.body?.velocity.rotate(COEFF_VELOCITY * d)
         }
         break
       case Directions.Up:
