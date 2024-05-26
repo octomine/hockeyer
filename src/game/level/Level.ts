@@ -3,7 +3,7 @@ import { createLine } from "../utils"
 import { LevelObject } from "./Level.types"
 
 const TEXTURE_COPIES = 5
-const F_STEP = 400
+const F_STEP = 600
 
 class Level {
   private scene!: Phaser.Scene
@@ -35,13 +35,13 @@ class Level {
     for (let i = 0; i < 4; i++) {
       init.y = F_STEP + i * F_STEP
       const sign = i % 2 === 0 ? 1 : -1
-      this.addObj(LevelObject.Bonus, init, createLine(5, sign * 10))
+      this.addObj(LevelObject.Bonus, init, createLine(5, sign * 20))
     }
-    init.x -= 100
-    for (let i = 0; i < 5; i++) {
-      init.y = F_STEP + i * F_STEP - (F_STEP / 3)
-      this.addObj(LevelObject.Barrier, init, createLine(3, 100, 0))
-    }
+    // init.x -= 100
+    // for (let i = 0; i < 5; i++) {
+    //   init.y = F_STEP + i * F_STEP - (F_STEP / 3)
+    //   this.addObj(LevelObject.Barrier, init, createLine(3, 100, 0))
+    // }
 
     return { width, height: h }
   }
