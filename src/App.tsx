@@ -1,10 +1,10 @@
-import './App.css'
-import { initGame } from './game'
+import './App.css';
+import { initGame } from './game';
 
-window.addEventListener('load', initGame)
+window.addEventListener('load', initGame);
 
 function App() {
-  return <div id="game"></div>
+  return <div id="game"></div>;
 }
 
-export default App
+export default App;
