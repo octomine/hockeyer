@@ -16,14 +16,14 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["./src/*"],
-      "@game/*": ["./src/game/*"],
+      "@game/*": ["./src/game/*"]
     },
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

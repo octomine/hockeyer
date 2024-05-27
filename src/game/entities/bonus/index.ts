@@ -1,1 +1,1 @@
-export { default as Bonus } from './Bonus'
+export { default as Bonus } from './Bonus';

@@ -1,11 +1,11 @@
-import { Entity } from "../entity";
+import { Entity } from '../entity';
 
 class Barrier extends Entity {
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'bar')
+    super(scene, x, y, 'bar');
 
-    this.setScale(.75)
+    this.setScale(0.75);
   }
 }
 
-export default Barrier
+export default Barrier;

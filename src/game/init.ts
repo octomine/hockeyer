@@ -1,9 +1,9 @@
-import 'phaser'
-import { MainScene } from '@game/scenes'
+import 'phaser';
+import { MainScene } from '@game/scenes';
 
 declare global {
   interface Window {
-    game: Phaser.Game
+    game: Phaser.Game;
   }
 }
 
@@ -22,8 +22,8 @@ export const initGame = () => {
     },
     scene: [MainScene],
     physics: {
-      default: 'arcade'
-    }
-  }
-  window.game = new Phaser.Game(config)
-}
+      default: 'arcade',
+    },
+  };
+  window.game = new Phaser.Game(config);
+};
