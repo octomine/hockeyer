@@ -4,6 +4,14 @@ export const AppContainer = () => (
   <Wrapper>
     <div>TEST!!1</div>
     <div id="game"></div>
-    <UIHolder></UIHolder>
+    <UIHolder>
+      <div
+        onClick={() => {
+          console.log('CLICK!!1');
+        }}
+      >
+        click
+      </div>
+    </UIHolder>
   </Wrapper>
 );
