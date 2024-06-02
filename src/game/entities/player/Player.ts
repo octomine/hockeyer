@@ -6,8 +6,8 @@ const COEFF_ACCELERATION = 100;
 const COEFF_VELOCITY = 0.057;
 
 class Player extends Entity {
-  constructor(scene: Phaser.Scene, x: number) {
-    super(scene, x, 50, 'char');
+  constructor(scene: Phaser.Scene) {
+    super(scene, 0, 50, 'char');
 
     this.setOrigin(0.5);
 

@@ -1,7 +1,6 @@
 import Level, { FINISH_OFFSET } from '@app/game/level/Level';
 import { Player, Swipe, Bonus } from '@game/index';
 
-const WORLD_PADDINGS = 50;
 const OFFSET_COEFF = 0.75;
 const PADDING_V = 30;
 const PADDING_H = 50;
@@ -30,12 +29,11 @@ class MainScene extends Phaser.Scene {
   create() {
     this.barrsGrp = this.physics.add.group();
     this.bonusGrp = this.physics.add.group();
+    this.player = new Player(this);
 
     Level.init(this, this.bonusGrp, this.barrsGrp);
-    const { width, height } = Level.create();
-    this.finish = height - FINISH_OFFSET
+    this.updateLevel()
 
-    this.player = new Player(this, width / 2);
     this.physics.add.collider(this.player, this.barrsGrp);
     this.physics.add.overlap(this.player, this.bonusGrp, (_, obj) => {
       const bonus = obj as Bonus;
@@ -43,12 +41,6 @@ class MainScene extends Phaser.Scene {
       bonus.collect();
     });
 
-    this.cameras.main.setBounds(
-      -WORLD_PADDINGS,
-      -WORLD_PADDINGS,
-      width + 2 * WORLD_PADDINGS,
-      height + 2 * WORLD_PADDINGS,
-    );
     this.cameras.main.startFollow(this.player, true, 0.05, 0.05);
 
     this.swipe = new Swipe(this);
@@ -73,9 +65,16 @@ class MainScene extends Phaser.Scene {
     }
 
     if (this.player.y > this.finish) {
-      this.player.setDrag(Number(this.player.body?.velocity.length()))
-      this.scene.restart()
+      this.player.setVelocity(0)
+      this.updateLevel()
     }
+  }
+
+  updateLevel() {
+    const { width, height } = Level.create();
+    this.finish = height - FINISH_OFFSET
+    this.player.setPosition(width / 2, 50)
+    this.player.setDepth(1)
   }
 }
 
