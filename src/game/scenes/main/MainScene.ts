@@ -1,4 +1,4 @@
-import Level, { FINISH_OFFSET } from '@app/game/level/Level';
+import Level from '@app/game/level/Level';
 import { Player, Swipe, Bonus } from '@game/index';
 
 const OFFSET_COEFF = 0.75;
@@ -7,8 +7,9 @@ const PADDING_H = 50;
 
 class MainScene extends Phaser.Scene {
   private player!: Player;
-  private finish!: number
 
+  private background!: Phaser.GameObjects.TileSprite
+  private finish!: Phaser.GameObjects.TileSprite
   private barrsGrp!: Phaser.Physics.Arcade.Group;
   private bonusGrp!: Phaser.Physics.Arcade.Group;
 
@@ -27,11 +28,13 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
+    this.background = this.add.tileSprite(0, 0, 0, 0, 'ice').setOrigin(0);
+    this.finish = this.add.tileSprite(0, 0, 0, 30, 'finish').setOrigin(0)
     this.barrsGrp = this.physics.add.group();
     this.bonusGrp = this.physics.add.group();
     this.player = new Player(this);
 
-    Level.init(this, this.bonusGrp, this.barrsGrp);
+    Level.init(this, this.background, this.finish, this.bonusGrp, this.barrsGrp);
     this.updateLevel()
 
     this.physics.add.collider(this.player, this.barrsGrp);
@@ -64,15 +67,14 @@ class MainScene extends Phaser.Scene {
       this.cameras.main.setFollowOffset(-xOffset, -yOffset);
     }
 
-    if (this.player.y > this.finish) {
+    if (this.player.y > this.finish.y) {
       this.player.setVelocity(0)
       this.updateLevel()
     }
   }
 
   updateLevel() {
-    const { width, height } = Level.create();
-    this.finish = height - FINISH_OFFSET
+    const { width } = Level.create();
     this.player.setPosition(width / 2, 50)
     this.player.setDepth(1)
   }

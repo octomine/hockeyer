@@ -4,11 +4,13 @@ import { LevelObject } from './Level.types';
 
 export const FINISH_OFFSET = 100;
 const WORLD_PADDINGS = 50;
-const TEXTURE_COPIES = 5;
+// const TEXTURE_COPIES = 5;
 // const F_STEP = 600;
 
 class Level {
   private scene!: Phaser.Scene;
+  private background!: Phaser.GameObjects.TileSprite;
+  private finish!: Phaser.GameObjects.TileSprite;
   private bonusGrp!: Phaser.Physics.Arcade.Group;
   private barrsGrp!: Phaser.Physics.Arcade.Group;
 
@@ -16,10 +18,14 @@ class Level {
 
   init(
     scene: Phaser.Scene,
+    background: Phaser.GameObjects.TileSprite,
+    finish: Phaser.GameObjects.TileSprite,
     bonusGrp: Phaser.Physics.Arcade.Group,
     barrsGrp: Phaser.Physics.Arcade.Group,
   ) {
     this.scene = scene;
+    this.background = background;
+    this.finish = finish;
     this.bonusGrp = bonusGrp;
     this.barrsGrp = barrsGrp;
   }
@@ -28,26 +34,27 @@ class Level {
     this.barrsGrp.clear(true, true)
     this.bonusGrp.clear(true, true)
 
-    const { width, height } = this.scene.add.image(0, 0, 'ice').setOrigin(0);
-    const h = height * TEXTURE_COPIES;
-    for (let i = 0; i < TEXTURE_COPIES; i++) {
-      this.scene.add.image(0, i * height, 'ice').setOrigin(0);
-    }
-    this.scene.add.image(0, h - FINISH_OFFSET, 'finish').setOrigin(0)
+    const width = 500;
+    const height = 2500;
+    this.background.width = width;
+    this.background.height = height;
+    this.finish.width = width;
+    this.finish.y = height - FINISH_OFFSET;
+    console.log(this.finish.height);
 
-    this.scene.physics.world.setBounds(0, 0, width, h);
+    this.scene.physics.world.setBounds(0, 0, width, height);
     this.scene.cameras.main.setBounds(
       -WORLD_PADDINGS,
       -WORLD_PADDINGS,
       width + 2 * WORLD_PADDINGS,
-      h + 2 * WORLD_PADDINGS,
+      height + 2 * WORLD_PADDINGS,
     );
 
     const coordinates = []
     for (let i = 0; i < 10; i++) {
       coordinates.push({
         x: Phaser.Math.Between(0, width),
-        y: Phaser.Math.Between(0, h)
+        y: Phaser.Math.Between(0, height)
       })
     }
     this.addObj(LevelObject.Barrier, { x: 0, y: 0 }, coordinates)
@@ -64,7 +71,7 @@ class Level {
     //   this.addObj(LevelObject.Barrier, init, createLine(3, 100, 0))
     // }
 
-    return { width, height: h };
+    return { width, height };
   }
 
   // TODO: чё-т вот тут как-то...
