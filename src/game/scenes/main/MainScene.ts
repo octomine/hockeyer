@@ -1,4 +1,4 @@
-import Level from '@app/game/level/Level';
+import Level, { FINISH_OFFSET } from '@app/game/level/Level';
 import { Player, Swipe, Bonus } from '@game/index';
 
 const WORLD_PADDINGS = 50;
@@ -8,6 +8,7 @@ const PADDING_H = 50;
 
 class MainScene extends Phaser.Scene {
   private player!: Player;
+  private finish!: number
 
   private barrsGrp!: Phaser.Physics.Arcade.Group;
   private bonusGrp!: Phaser.Physics.Arcade.Group;
@@ -20,6 +21,7 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.image('ice', 'assets/ice.png');
+    this.load.image('finish', 'assets/finish.png')
     this.load.image('char', 'assets/char.png');
     this.load.image('bar', 'assets/barrier.png');
     this.load.image('bonus', 'assets/bonus.png');
@@ -31,6 +33,7 @@ class MainScene extends Phaser.Scene {
 
     Level.init(this, this.bonusGrp, this.barrsGrp);
     const { width, height } = Level.create();
+    this.finish = height - FINISH_OFFSET
 
     this.player = new Player(this, width / 2);
     this.physics.add.collider(this.player, this.barrsGrp);
@@ -67,6 +70,11 @@ class MainScene extends Phaser.Scene {
         this.scale.height / 2 - PADDING_H,
       );
       this.cameras.main.setFollowOffset(-xOffset, -yOffset);
+    }
+
+    if (this.player.y > this.finish) {
+      this.player.setDrag(Number(this.player.body?.velocity.length()))
+      this.scene.restart()
     }
   }
 }

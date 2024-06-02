@@ -2,6 +2,7 @@ import { Barrier, Bonus } from '../entities';
 import { createLine } from '../utils';
 import { LevelObject } from './Level.types';
 
+export const FINISH_OFFSET = 100;
 const TEXTURE_COPIES = 5;
 const F_STEP = 600;
 
@@ -10,7 +11,7 @@ class Level {
   private bonusGrp!: Phaser.Physics.Arcade.Group;
   private barrsGrp!: Phaser.Physics.Arcade.Group;
 
-  constructor() {}
+  constructor() { }
 
   init(
     scene: Phaser.Scene,
@@ -28,6 +29,7 @@ class Level {
     for (let i = 0; i < TEXTURE_COPIES; i++) {
       this.scene.add.image(0, i * height, 'ice').setOrigin(0);
     }
+    this.scene.add.image(0, h - FINISH_OFFSET, 'finish').setOrigin(0)
 
     this.scene.physics.world.setBounds(0, 0, width, h);
 

@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
 `;
 
 export const UIHolder = styled.div`
-  pointer-events: none;
   position: absolute;
   display: flex;
   align-items: center;
@@ -16,4 +15,17 @@ export const UIHolder = styled.div`
   width: 100%;
   height: 100%;
   background: none;
+`;
+
+export const OptsButton = styled.div`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  right: 10px;
+  top: 30px;
+`;
+
+export const TButton = styled.div`
+  background: white;
 `;
