@@ -5,11 +5,11 @@ const OFFSET_COEFF = 0.75;
 const PADDING_V = 30;
 const PADDING_H = 50;
 
-class MainScene extends Phaser.Scene {
+class PlayGame extends Phaser.Scene {
   private player!: Player;
 
-  private background!: Phaser.GameObjects.TileSprite
-  private finish!: Phaser.GameObjects.TileSprite
+  private background!: Phaser.GameObjects.TileSprite;
+  private finish!: Phaser.GameObjects.TileSprite;
   private barrsGrp!: Phaser.Physics.Arcade.Group;
   private bonusGrp!: Phaser.Physics.Arcade.Group;
 
@@ -21,7 +21,7 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.image('ice', 'assets/ice.png');
-    this.load.image('finish', 'assets/finish.png')
+    this.load.image('finish', 'assets/finish.png');
     this.load.image('char', 'assets/char.png');
     this.load.image('bar', 'assets/barrier.png');
     this.load.image('bonus', 'assets/bonus.png');
@@ -29,13 +29,19 @@ class MainScene extends Phaser.Scene {
 
   create() {
     this.background = this.add.tileSprite(0, 0, 0, 0, 'ice').setOrigin(0);
-    this.finish = this.add.tileSprite(0, 0, 0, 30, 'finish').setOrigin(0)
+    this.finish = this.add.tileSprite(0, 0, 0, 30, 'finish').setOrigin(0);
     this.barrsGrp = this.physics.add.group();
     this.bonusGrp = this.physics.add.group();
     this.player = new Player(this);
 
-    Level.init(this, this.background, this.finish, this.bonusGrp, this.barrsGrp);
-    this.updateLevel()
+    Level.init(
+      this,
+      this.background,
+      this.finish,
+      this.bonusGrp,
+      this.barrsGrp,
+    );
+    this.updateLevel();
 
     this.physics.add.collider(this.player, this.barrsGrp);
     this.physics.add.overlap(this.player, this.bonusGrp, (_, obj) => {
@@ -68,16 +74,16 @@ class MainScene extends Phaser.Scene {
     }
 
     if (this.player.y > this.finish.y) {
-      this.player.setVelocity(0)
-      this.updateLevel()
+      this.player.setVelocity(0);
+      this.updateLevel();
     }
   }
 
   updateLevel() {
     const { width } = Level.create();
-    this.player.setPosition(width / 2, 50)
-    this.player.setDepth(1)
+    this.player.setPosition(width / 2, 50);
+    this.player.setDepth(1);
   }
 }
 
-export default MainScene;
+export default PlayGame;

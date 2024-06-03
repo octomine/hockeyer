@@ -4,7 +4,6 @@ import { LevelObject } from './Level.types';
 
 export const FINISH_OFFSET = 100;
 const WORLD_PADDINGS = 50;
-// const TEXTURE_COPIES = 5;
 // const F_STEP = 600;
 
 class Level {
@@ -14,7 +13,7 @@ class Level {
   private bonusGrp!: Phaser.Physics.Arcade.Group;
   private barrsGrp!: Phaser.Physics.Arcade.Group;
 
-  constructor() { }
+  constructor() {}
 
   init(
     scene: Phaser.Scene,
@@ -31,8 +30,8 @@ class Level {
   }
 
   create(): { width: number; height: number } {
-    this.barrsGrp.clear(true, true)
-    this.bonusGrp.clear(true, true)
+    this.barrsGrp.clear(true, true);
+    this.bonusGrp.clear(true, true);
 
     const width = 500;
     const height = 2500;
@@ -40,7 +39,6 @@ class Level {
     this.background.height = height;
     this.finish.width = width;
     this.finish.y = height - FINISH_OFFSET;
-    console.log(this.finish.height);
 
     this.scene.physics.world.setBounds(0, 0, width, height);
     this.scene.cameras.main.setBounds(
@@ -50,14 +48,14 @@ class Level {
       height + 2 * WORLD_PADDINGS,
     );
 
-    const coordinates = []
+    const coordinates = [];
     for (let i = 0; i < 10; i++) {
       coordinates.push({
         x: Phaser.Math.Between(0, width),
-        y: Phaser.Math.Between(0, height)
-      })
+        y: Phaser.Math.Between(0, height),
+      });
     }
-    this.addObj(LevelObject.Barrier, { x: 0, y: 0 }, coordinates)
+    this.addObj(LevelObject.Barrier, { x: 0, y: 0 }, coordinates);
 
     // const init = { x: width / 2, y: 200 };
     // for (let i = 0; i < 4; i++) {

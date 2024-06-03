@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { OptsButton, TButton, UIHolder, Wrapper } from './AppContainer.styled';
+import { Game } from '../game';
 
 export const AppContainer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -7,7 +8,7 @@ export const AppContainer = () => {
   return (
     <Wrapper>
       <div>TEST!!1</div>
-      <div id="game"></div>
+      <Game></Game>
       {isPlaying ? (
         <OptsButton
           onClick={() => {
@@ -21,7 +22,7 @@ export const AppContainer = () => {
               setIsPlaying(true);
             }}
           >
-            click
+            играть
           </TButton>
         </UIHolder>
       )}

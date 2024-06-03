@@ -27,5 +27,6 @@ export const OptsButton = styled.div`
 `;
 
 export const TButton = styled.div`
+  padding: 0.5em 3em;
   background: white;
 `;
