@@ -1,9 +1,13 @@
-import { useState } from 'react';
-import { OptsButton, TButton, UIHolder, Wrapper } from './AppContainer.styled';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setIsPlaying } from '@app/slices';
 import { Game } from '../game';
+import { OptsButton, TButton, UIHolder, Wrapper } from './AppContainer.styled';
+import { IState } from '@app/slices/types';
 
 export const AppContainer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch()
+  const isPlaying = useSelector<IState, boolean>((state) => state.game.isPlaying)
 
   return (
     <Wrapper>
@@ -12,14 +16,14 @@ export const AppContainer = () => {
       {isPlaying ? (
         <OptsButton
           onClick={() => {
-            setIsPlaying(false);
+            dispatch(setIsPlaying(false))
           }}
         ></OptsButton>
       ) : (
         <UIHolder>
           <TButton
             onClick={() => {
-              setIsPlaying(true);
+              dispatch(setIsPlaying(true))
             }}
           >
             играть
