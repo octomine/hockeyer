@@ -2,6 +2,7 @@ import { Directions, TMoveParams } from '@app/game';
 import { Entity } from '../entity';
 
 const DRAG = 30;
+const BREAK = 1000;
 const COEFF_ACCELERATION = 100;
 const COEFF_VELOCITY = 0.057;
 
@@ -41,6 +42,14 @@ class Player extends Entity {
       const dv = (COEFF_ACCELERATION * distance) / time;
       this.setVelocityY(cv + dv);
     }
+    this.setDrag(DRAG);
+  }
+
+  break() {
+    this.setDrag(BREAK);
+  }
+
+  resetDrag() {
     this.setDrag(DRAG);
   }
 }
