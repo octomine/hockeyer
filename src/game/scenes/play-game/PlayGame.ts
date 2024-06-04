@@ -1,5 +1,7 @@
+import store, { increaseTime, setIsPlaying, showMessage } from '@app/slices';
 import Level from '@app/game/level/Level';
 import { Player, Swipe, Bonus } from '@game/index';
+import { UIMessage } from '@app/slices/types';
 
 const OFFSET_COEFF = 0.75;
 const PADDING_V = 30;
@@ -14,6 +16,9 @@ class PlayGame extends Phaser.Scene {
   private bonusGrp!: Phaser.Physics.Arcade.Group;
 
   private swipe!: Swipe;
+
+  private isPlaying = false;
+  private level!: number;
 
   constructor() {
     super('main');
@@ -41,6 +46,7 @@ class PlayGame extends Phaser.Scene {
       this.bonusGrp,
       this.barrsGrp,
     );
+
     this.updateLevel();
 
     this.physics.add.collider(this.player, this.barrsGrp);
@@ -57,9 +63,12 @@ class PlayGame extends Phaser.Scene {
       onMove: this.player.modifyMotion.bind(this.player),
       onUp: this.player.checkAcceleration.bind(this.player),
     });
+
+    store.subscribe(this.onStoreChange.bind(this));
   }
 
-  update() {
+  update(time: number, delta: number) {
+    // calculate offsets for camera
     if (this.player.body) {
       const { x, y } = this.player.body.velocity;
       const xOffset = Math.min(
@@ -73,9 +82,16 @@ class PlayGame extends Phaser.Scene {
       this.cameras.main.setFollowOffset(-xOffset, -yOffset);
     }
 
-    if (this.player.y > this.finish.y) {
-      this.player.setVelocity(0);
-      this.updateLevel();
+    // time counting
+    if (this.isPlaying) {
+      store.dispatch(increaseTime(delta));
+    }
+
+    // check finish
+    if (this.player.y > this.finish.y && this.isPlaying) {
+      this.player.break();
+      store.dispatch(setIsPlaying(false));
+      store.dispatch(showMessage(UIMessage.LevelFinish));
     }
   }
 
@@ -83,6 +99,18 @@ class PlayGame extends Phaser.Scene {
     const { width } = Level.create();
     this.player.setPosition(width / 2, 50);
     this.player.setDepth(1);
+    this.player.resetDrag();
+  }
+
+  onStoreChange() {
+    const { isPlaying } = store.getState().game;
+    this.isPlaying = isPlaying;
+
+    const { level } = store.getState().level;
+    if (this.level !== level) {
+      this.updateLevel();
+      this.level = level;
+    }
   }
 }
 

@@ -1,13 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setIsPlaying } from '@app/slices';
+import { setIsPlaying, showMessage } from '@app/slices';
 import { Game } from '../game';
-import { OptsButton, TButton, UIHolder, Wrapper } from './AppContainer.styled';
-import { IState } from '@app/slices/types';
+import { OptsButton, UIHolder, Wrapper } from './AppContainer.styled';
+import { IState, UIMessage } from '@app/slices/types';
+import { Messages } from '../messages';
+import { useEffect } from 'react';
 
 export const AppContainer = () => {
-  const dispatch = useDispatch()
-  const isPlaying = useSelector<IState, boolean>((state) => state.game.isPlaying)
+  const dispatch = useDispatch();
+  const isPlaying = useSelector<IState, boolean>(
+    (state) => state.game.isPlaying,
+  );
+
+  useEffect(() => {
+    dispatch(showMessage(UIMessage.LevelUp));
+  }, []);
 
   return (
     <Wrapper>
@@ -16,18 +24,12 @@ export const AppContainer = () => {
       {isPlaying ? (
         <OptsButton
           onClick={() => {
-            dispatch(setIsPlaying(false))
+            dispatch(setIsPlaying(false));
           }}
         ></OptsButton>
       ) : (
         <UIHolder>
-          <TButton
-            onClick={() => {
-              dispatch(setIsPlaying(true))
-            }}
-          >
-            играть
-          </TButton>
+          <Messages></Messages>
         </UIHolder>
       )}
     </Wrapper>
