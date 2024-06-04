@@ -31,6 +31,6 @@ export default {
 
 ## TODO:
 
-- implement `prelod`
-- implement `react`
+- implement `preload`
 - level generation
+- TODOs
