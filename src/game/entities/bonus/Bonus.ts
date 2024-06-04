@@ -1,10 +1,10 @@
-import { Entity } from "../entity";
+import { Entity } from '../entity';
 
 class Bonus extends Entity {
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'bonus')
+    super(scene, x, y, 'bonus');
 
-    this.setScale(.5)
+    this.setScale(0.5);
   }
 
   collect() {
@@ -16,10 +16,10 @@ class Bonus extends Entity {
       y: this.y - 50,
       ease: 'Quintic.easeInOut',
       onComplete: () => {
-        this.destroy()
-      }
-    })
+        this.destroy();
+      },
+    });
   }
 }
 
-export default Bonus
+export default Bonus;

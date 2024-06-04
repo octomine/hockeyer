@@ -1,1 +1,1 @@
-export { default as Barrier } from './Barrier'
+export { default as Barrier } from './Barrier';

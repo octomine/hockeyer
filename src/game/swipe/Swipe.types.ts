@@ -7,12 +7,12 @@ export enum Directions {
 }
 
 export type TMoveParams = {
-  direction: Directions
-  distance: number
-  time: number
-}
+  direction: Directions;
+  distance: number;
+  time: number;
+};
 
 export type TSwipeListeners = {
-  onMove?: (movePrams: TMoveParams) => void
-  onUp?: (movePrams: TMoveParams) => void
-}
+  onMove?: (movePrams: TMoveParams) => void;
+  onUp?: (movePrams: TMoveParams) => void;
+};
