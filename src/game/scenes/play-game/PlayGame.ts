@@ -67,7 +67,7 @@ class PlayGame extends Phaser.Scene {
     store.subscribe(this.onStoreChange.bind(this));
   }
 
-  update(_time: number, delta: number) {
+  update() {
     // calculate offsets for camera
     if (this.player.body) {
       const { x, y } = this.player.body.velocity;
@@ -84,7 +84,7 @@ class PlayGame extends Phaser.Scene {
 
     // time counting
     if (this.isPlaying) {
-      store.dispatch(increaseTime(delta));
+      store.dispatch(increaseTime());
     }
 
     // check finish

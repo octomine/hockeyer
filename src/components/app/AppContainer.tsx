@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setIsPlaying, showMessage } from '@app/slices';
-import { Game } from '../game';
-import { OptsButton, UIHolder, Wrapper } from './AppContainer.styled';
 import { IState, UIMessage } from '@app/slices/types';
+import { Game } from '../game';
 import { Messages } from '../messages';
-import { useEffect } from 'react';
+import { TimeCounter } from '../time-counter';
+
+import { OptsButton, UIHolder, Wrapper } from './AppContainer.styled';
 
 export const AppContainer = () => {
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ export const AppContainer = () => {
 
   return (
     <Wrapper>
-      <div>TEST!!1</div>
+      <TimeCounter></TimeCounter>
       <Game></Game>
       {isPlaying ? (
         <OptsButton
