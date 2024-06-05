@@ -1,1 +1,1 @@
-export { default as TimeCounter } from './TimeCounter'
+export { default as TimeCounter } from './TimeCounter';

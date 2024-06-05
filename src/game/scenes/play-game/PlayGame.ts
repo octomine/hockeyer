@@ -100,6 +100,7 @@ class PlayGame extends Phaser.Scene {
     this.player.setPosition(width / 2, 50);
     this.player.setDepth(1);
     this.player.resetDrag();
+    this.player.setVelocity(0);
   }
 
   onStoreChange() {

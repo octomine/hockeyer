@@ -20,11 +20,15 @@ const levelSlice = createSlice({
       let timeN = (new Date().getTime() - iTime) / 10;
       timeN = Math.floor(timeN) / 100;
       let time = timeN.toString();
-      time = time.includes('.') ? time : `${time}.00`
+      time = time.includes('.') ? time : `${time}.00`;
 
       return { ...state, time };
     },
-    resetTime: (state) => ({ ...state, time: '0.00', iTime: new Date().getTime() }),
+    resetTime: (state) => ({
+      ...state,
+      time: '0.00',
+      iTime: new Date().getTime(),
+    }),
   },
 });
 

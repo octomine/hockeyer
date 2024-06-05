@@ -7,7 +7,7 @@ const LevelUp = () => {
   const level = useSelector<IState, number>((state) => state.level.level);
   // TODO: запилить нормальный countdow или придумать что получше
   setTimeout(() => {
-    dispatch(resetTime())
+    dispatch(resetTime());
     dispatch(setIsPlaying(true));
   }, 3 * 1000);
 
