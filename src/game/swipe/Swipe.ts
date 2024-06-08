@@ -1,4 +1,7 @@
+import { PlayGame } from '../scenes';
 import { Directions, TMoveParams, TSwipeListeners } from './Swipe.types';
+
+const HORIZONTAL = [Directions.Left, Directions.Right]
 
 class Swipe {
   private scene: Phaser.Scene;
@@ -67,8 +70,9 @@ class Swipe {
         0,
       );
       if (
-        this.lastDirection !== direction &&
-        this.lastDirection !== Directions.None
+        HORIZONTAL.includes(this.lastDirection) &&
+        HORIZONTAL.includes(direction) &&
+        this.lastDirection !== direction
       ) {
         this.upHandler(pointer);
         this.downHandler(pointer);
@@ -84,6 +88,8 @@ class Swipe {
     if (this.listeners?.onMove) {
       this.listeners.onMove(movePrams);
     }
+
+    (this.scene as PlayGame).deb(Directions[movePrams.direction])
   }
 
   private upHandler(pointer: Phaser.Input.Pointer) {

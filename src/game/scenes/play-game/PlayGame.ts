@@ -20,6 +20,8 @@ class PlayGame extends Phaser.Scene {
   private isPlaying = false;
   private level!: number;
 
+  private debTxt!: Phaser.GameObjects.Text;
+
   constructor() {
     super('main');
   }
@@ -65,6 +67,8 @@ class PlayGame extends Phaser.Scene {
     });
 
     store.subscribe(this.onStoreChange.bind(this));
+
+    this.debTxt = this.add.text(0, 0, 'deb', { color: '#000000', fontSize: '20px' });
   }
 
   update() {
@@ -93,6 +97,9 @@ class PlayGame extends Phaser.Scene {
       store.dispatch(setIsPlaying(false));
       store.dispatch(showMessage(UIMessage.LevelFinish));
     }
+
+    // deb
+    this.debTxt.setPosition(this.player.x - 15, this.player.y + 20)
   }
 
   updateLevel() {
@@ -112,6 +119,10 @@ class PlayGame extends Phaser.Scene {
       this.updateLevel();
       this.level = level;
     }
+  }
+
+  public deb(msg: string) {
+    this.debTxt.setText(msg)
   }
 }
 

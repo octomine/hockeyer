@@ -29,7 +29,7 @@ class Player extends Entity {
         break;
       case Directions.Up:
         if (velocity > 0) {
-          this.setDrag(time);
+          this.setDrag(time * 5);
         }
         break;
       default:
