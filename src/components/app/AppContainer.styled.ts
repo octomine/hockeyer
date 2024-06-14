@@ -1,3 +1,4 @@
+import { Button } from '@app/ui';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -17,13 +18,13 @@ export const UIHolder = styled.div`
   background: none;
 `;
 
-export const OptsButton = styled.div`
+export const OptsButton = styled(Button)`
   position: absolute;
   width: 20px;
   height: 20px;
-  background: pink;
   right: 10px;
   top: 30px;
+  border-radius: 50%;
 `;
 
 export const TButton = styled.div`

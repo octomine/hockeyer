@@ -16,7 +16,7 @@ export const AppContainer = () => {
   );
 
   useEffect(() => {
-    dispatch(showMessage(UIMessage.LevelUp));
+    dispatch(showMessage(UIMessage.Menu));
   }, []);
 
   return (
@@ -27,8 +27,9 @@ export const AppContainer = () => {
         <OptsButton
           onClick={() => {
             dispatch(setIsPlaying(false));
+            dispatch(showMessage(UIMessage.Menu));
           }}
-        ></OptsButton>
+        >A</OptsButton>
       ) : (
         <UIHolder>
           <Messages></Messages>

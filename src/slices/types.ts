@@ -11,6 +11,7 @@ export enum UIMessage {
   None = 0,
   LevelFinish,
   LevelUp,
+  Menu,
 }
 
 interface IUI {
