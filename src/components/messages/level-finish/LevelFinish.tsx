@@ -1,5 +1,6 @@
 import { levelUp, showMessage } from '@app/slices';
 import { ILevel, IState, UIMessage } from '@app/slices/types';
+import { Button, WrapperV } from '@app/ui';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LevelFinish = () => {
@@ -7,19 +8,18 @@ const LevelFinish = () => {
   const { level, time } = useSelector<IState, ILevel>((state) => state.level);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <WrapperV>
       <div>{`уровень ${level} завершён`}</div>
       <div>{`время: ${time}`}</div>
-      <div
-        style={{ background: 'white', padding: '.5em 2em' }}
+      <Button
         onClick={() => {
           dispatch(levelUp());
           dispatch(showMessage(UIMessage.LevelUp));
         }}
       >
         дальше
-      </div>
-    </div>
+      </Button>
+    </WrapperV>
   );
 };
 
