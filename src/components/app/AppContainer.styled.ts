@@ -1,10 +1,8 @@
-import { Button } from '@app/ui';
+import { Button, WrapperV } from '@app/ui';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(WrapperV)`
   position: relative;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
 `;
 
@@ -26,9 +24,4 @@ export const OptsButton = styled(Button)`
   right: 10px;
   top: 30px;
   border-radius: 50%;
-`;
-
-export const TButton = styled.div`
-  padding: 0.5em 3em;
-  background: white;
 `;
