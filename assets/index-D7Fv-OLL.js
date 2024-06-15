@@ -6412,7 +6412,7 @@ return new `+this.key+`();
   transition: all 0.2s;
 
   ${({disabled:p})=>!p&&Kx}
-`,Ph=({disabled:p=!1,children:x,onClick:P})=>{const R=()=>{p||P()};return At.jsx($x,{disabled:p,onClick:R,children:x})},Zx=()=>{const p=ga(),{level:x,time:P}=Ns(R=>R.level);return At.jsxs(xc,{children:[At.jsx("div",{children:`уровень ${x} завершён`}),At.jsx("div",{children:`время: ${P}`}),At.jsx(Ph,{onClick:()=>{p(Eg()),p(Ln(Ce.LevelUp))},children:"дальше"})]})},Qx=()=>{const p=ga(),x=Ns(P=>P.level.level);return setTimeout(()=>{p(Ln(Ce.None)),p(Pg()),p(mh(!0))},3*1e3),At.jsx("div",{children:`уровень: ${x}`})},Jx=be.div`
+`,Ph=({className:p,disabled:x=!1,children:P,onClick:R})=>{const I=()=>{x||R()};return At.jsx($x,{className:p,disabled:x,onClick:I,children:P})},Zx=()=>{const p=ga(),{level:x,time:P}=Ns(R=>R.level);return At.jsxs(xc,{children:[At.jsx("div",{children:`уровень ${x} завершён`}),At.jsx("div",{children:`время: ${P}`}),At.jsx(Ph,{onClick:()=>{p(Eg()),p(Ln(Ce.LevelUp))},children:"дальше"})]})},Qx=()=>{const p=ga(),x=Ns(P=>P.level.level);return setTimeout(()=>{p(Ln(Ce.None)),p(Pg()),p(mh(!0))},3*1e3),At.jsx("div",{children:`уровень: ${x}`})},Jx=be.div`
   padding: 1em 2em;
   border: 2px solid #cccccc;
   border-radius: 4px;
@@ -6435,6 +6435,7 @@ return new `+this.key+`();
   background: none;
 `,i1=be(Ph)`
   position: absolute;
+  padding: 0.5em;
   width: 20px;
   height: 20px;
   right: 10px;
