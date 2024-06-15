@@ -20,7 +20,7 @@ export const UIHolder = styled.div`
 
 export const OptsButton = styled(Button)`
   position: absolute;
-  padding: .5em;
+  padding: 0.5em;
   width: 20px;
   height: 20px;
   right: 10px;
