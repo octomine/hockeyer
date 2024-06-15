@@ -29,7 +29,9 @@ export const AppContainer = () => {
             dispatch(setIsPlaying(false));
             dispatch(showMessage(UIMessage.Menu));
           }}
-        >A</OptsButton>
+        >
+          A
+        </OptsButton>
       ) : (
         <UIHolder>
           <Messages></Messages>
