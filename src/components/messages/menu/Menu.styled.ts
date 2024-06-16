@@ -1,4 +1,4 @@
-import { WrapperV } from '@app/ui';
+import { WrapperV } from '@app/style';
 import styled from 'styled-components';
 
 export const Wrapper = styled(WrapperV)`

@@ -1,6 +1,7 @@
 import { levelUp, showMessage } from '@app/slices';
 import { ILevel, IState, UIMessage } from '@app/slices/types';
-import { Button, WrapperV } from '@app/ui';
+import { WrapperV } from '@app/style';
+import { Button } from '@app/ui';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LevelFinish = () => {

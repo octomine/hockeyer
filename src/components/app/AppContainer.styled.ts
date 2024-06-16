@@ -1,4 +1,5 @@
-import { Button, WrapperV } from '@app/ui';
+import { WrapperV } from '@app/style';
+import { Button } from '@app/ui';
 import styled from 'styled-components';
 
 export const Wrapper = styled(WrapperV)`
