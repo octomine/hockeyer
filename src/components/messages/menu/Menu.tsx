@@ -15,8 +15,8 @@ const Menu = () => {
         dispatch(showMessage(UIMessage.LevelUp));
       },
     },
-    { label: 'учить', callback: () => { }, disabled: false, additional: true },
-    { label: 'смотреть', callback: () => { }, disabled: true, additional: true },
+    { label: 'учить', callback: () => {}, disabled: false, additional: true },
+    { label: 'смотреть', callback: () => {}, disabled: true, additional: true },
   ];
 
   return (

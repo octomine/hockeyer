@@ -21,6 +21,8 @@ export const Wrapper = styled.div<{ disabled: boolean; additional: boolean }>`
   opacity: ${({ disabled }) => (disabled ? 0.37 : 1)};
   color: ${({ theme, additional }) =>
     additional ? theme.color.label.additional : theme.color.label.main};
+  font-size: ${({ theme }) => theme.size.m};
+  font-weight: 700;
 
   transition: all 0.2s;
 

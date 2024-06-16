@@ -5,12 +5,17 @@ export const theme = {
       additional: '#ffffff',
     },
     border: {
-      button: '#489ab2',
+      button: '#74bace',
     },
     label: {
       main: '#ffffff',
       additional: '#0099ff',
       disabled: '#aaaaaa',
     },
+  },
+  size: {
+    s: '16px',
+    m: '18px',
+    l: '24px',
   },
 };

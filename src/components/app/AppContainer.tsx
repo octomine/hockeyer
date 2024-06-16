@@ -25,12 +25,13 @@ export const AppContainer = () => {
       <Game></Game>
       {isPlaying ? (
         <OptsButton
+          additional
           onClick={() => {
             dispatch(setIsPlaying(false));
             dispatch(showMessage(UIMessage.Menu));
           }}
         >
-          A
+          {'<'}
         </OptsButton>
       ) : (
         <UIHolder>

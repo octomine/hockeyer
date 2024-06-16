@@ -1,5 +1,6 @@
 import { resetTime, setIsPlaying, showMessage } from '@app/slices';
 import { IState, UIMessage } from '@app/slices/types';
+import { Label } from '@app/ui';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LevelUp = () => {
@@ -12,7 +13,7 @@ const LevelUp = () => {
     dispatch(setIsPlaying(true));
   }, 3 * 1000);
 
-  return <div>{`уровень: ${level}`}</div>;
+  return <Label size="l">{`уровень: ${level}`}</Label>;
 };
 
 export default LevelUp;
