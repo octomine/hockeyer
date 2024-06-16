@@ -15,17 +15,24 @@ const Menu = () => {
         dispatch(showMessage(UIMessage.LevelUp));
       },
     },
-    { label: 'учить', callback: () => {}, disabled: true },
-    { label: 'смотреть', callback: () => {}, disabled: true },
+    { label: 'учить', callback: () => { }, disabled: false, additional: true },
+    { label: 'смотреть', callback: () => { }, disabled: true, additional: true },
   ];
 
   return (
     <Wrapper>
-      {menu.map(({ label, callback, disabled = false }, i) => (
-        <Button key={`${label}_${i}`} disabled={disabled} onClick={callback}>
-          {label}
-        </Button>
-      ))}
+      {menu.map(
+        ({ label, callback, disabled = false, additional = false }, i) => (
+          <Button
+            key={`${label}_${i}`}
+            disabled={disabled}
+            additional={additional}
+            onClick={callback}
+          >
+            {label}
+          </Button>
+        ),
+      )}
     </Wrapper>
   );
 };
