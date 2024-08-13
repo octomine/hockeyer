@@ -49,6 +49,7 @@ class PlayGame extends Phaser.Scene {
       this.barrsGrp,
     );
 
+    this.swipe = new Swipe(this);
     this.updateLevel();
 
     this.physics.add.collider(this.player, this.barrsGrp);
@@ -60,7 +61,6 @@ class PlayGame extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player, true, 0.05, 0.05);
 
-    this.swipe = new Swipe(this);
     this.swipe.addListeners({
       onMove: this.player.modifyMotion.bind(this.player),
       onUp: this.player.checkAcceleration.bind(this.player),
@@ -107,10 +107,13 @@ class PlayGame extends Phaser.Scene {
 
   updateLevel() {
     const { width } = Level.create();
+
     this.player.setPosition(width / 2, 50);
     this.player.setDepth(1);
     this.player.resetDrag();
     this.player.setVelocity(0);
+
+    this.swipe.setLevelWidth(width);
   }
 
   onStoreChange() {

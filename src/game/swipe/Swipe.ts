@@ -5,6 +5,7 @@ const HORIZONTAL = [Directions.Left, Directions.Right];
 
 class Swipe {
   private scene: Phaser.Scene;
+  private scrollCoeff: number = 1;
 
   private listeners!: TSwipeListeners;
   private downPoint = new Phaser.Math.Vector2();
@@ -13,13 +14,20 @@ class Swipe {
   private lastPoint!: Phaser.Math.Vector2;
   private lastDirection = Directions.None;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, levelWidth: number = 0) {
     this.scene = scene;
+    const { scale: { width } } = scene;
+    this.setLevelWidth(levelWidth ? levelWidth : width);
     this.setupEvents();
   }
 
   addListeners(listeners: TSwipeListeners) {
     this.listeners = listeners;
+  }
+
+  setLevelWidth(levelWidth: number) {
+    const { scale: { width } } = this.scene;
+    this.scrollCoeff = levelWidth / width;
   }
 
   private setupEvents() {
@@ -89,7 +97,7 @@ class Swipe {
       this.listeners.onMove(movePrams);
     }
 
-    (this.scene as PlayGame).deb(Directions[movePrams.direction]);
+    (this.scene as PlayGame).deb(pointer.position.x.toString());
   }
 
   private upHandler(pointer: Phaser.Input.Pointer) {
