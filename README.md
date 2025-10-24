@@ -27,4 +27,4 @@ yarn deploy
 
 ## Посмотреть
 
-https://octomine.github.io/picker/
+https://octomine.github.io/hockeyer/
